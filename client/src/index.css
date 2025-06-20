@@ -1,0 +1,15 @@
+@import "tailwindcss";
+
+@theme{
+    --font-insan: "Inclusive Sans", sans-serif;
+    --font-aldrich :  "Aldrich", sans-serif;
+    --color-primary : #d9d9d9
+}
+
+@layer base{
+    #autentikasiBG{
+        background-image: url("./assets/beaches.png");
+        background-repeat: no-repeat;
+        background-size: 100vw 100vh;
+    }
+}

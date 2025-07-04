@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE `user` MODIFY `level` INTEGER NOT NULL DEFAULT 1,
+    MODIFY `current_exp` INTEGER NOT NULL DEFAULT 1;

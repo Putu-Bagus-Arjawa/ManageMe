@@ -3,13 +3,35 @@
 @theme{
     --font-insan: "Inclusive Sans", sans-serif;
     --font-aldrich :  "Aldrich", sans-serif;
-    --color-primary : #d9d9d9
+    --color-secondary : #633333;
+    --color-primary: #8D6E6F;
+    --color-triary : #b99494;
 }
 
+
 @layer base{
-    #autentikasiBG{
+    .beachBG{
         background-image: url("./assets/beaches.png");
         background-repeat: no-repeat;
-        background-size: 100vw 100vh;
+        background-size: 10vw 100vh;
+        /* color: #b99494; */
     }
+
+    .formBG{
+        background-image: url("./assets/form.png");
+        background-repeat: no-repeat;
+        background-size:cover;
+    }
+    .pavilionBG{
+        background-image: url("./assets/bgkulti.png");
+        background-repeat: no-repeat;
+        background-size:cover;
+    }
+    .leavesbg{
+        background-image: url("./assets/leaves.png");
+        background-repeat: no-repeat;
+        background-size:10vw 200vh;
+        @apply rounded-2xl
+    }
+
 }

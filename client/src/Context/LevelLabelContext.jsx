@@ -6,7 +6,7 @@ export const LevelLabelProvider = ({ children }) => {
   const [levelLabels, setLevelLabels] = useState(null);
   const [loadingLabels, setLoadingLabels] = useState(true);
 
-  useEffect(() => {
+
     const fetchLabels = async () => {
       const res = await fetch("http://localhost:9000/level/labels", {
         credentials: "include"
@@ -17,11 +17,13 @@ export const LevelLabelProvider = ({ children }) => {
       }
       setLoadingLabels(false);
     };
+
+  useEffect(() => {
     fetchLabels();
   }, []);
 
   return (
-    <LevelLabelContext.Provider value={{ levelLabels, loadingLabels }}>
+    <LevelLabelContext.Provider value={{ levelLabels, loadingLabels,fetchLabels }}>
       {children}
     </LevelLabelContext.Provider>
   );

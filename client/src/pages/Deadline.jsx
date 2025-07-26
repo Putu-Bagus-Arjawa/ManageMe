@@ -40,7 +40,7 @@ const Deadline = () => {
     <Dashboard>
         <LevelSection/>
       <p>Halaman deadline ni boss</p>
-      <div className="mt-40 grid grid-cols-1 gap-4">
+      <div className="mt-40 grid grid-cols-3 gap-4 ">
       {data.map((item, idx)=>(
         <DeadlineCard 
             key={idx}
@@ -61,8 +61,8 @@ export default Deadline
 
 const DeadlineCard = ({title, description,due,label, weight,consequence  })=>{
     return (
-        <aside className="shadow-xl px-4 py-4 flex justify-between h-50">
-            <section className="border-r-[1px] px-12 flex flex-col justify-between">
+        <aside className="bg-white rounded-lg shadow-xl px-4 py-4 flex flex-col h-90 justify-between">
+            <section className="border-r-[1px] border-t-[1px] px-12 flex flex-col justify-between relative">
                 <div className="flex flex-col">
                     <h3 className="font-semibold font-aldrich mb-4 text-center">{title}</h3>
                     <div className="flex gap-x-4">
@@ -71,6 +71,9 @@ const DeadlineCard = ({title, description,due,label, weight,consequence  })=>{
                     </div>
                 </div>
                 <p className="text-primary font-insan">Deadline : {due}</p>
+                <div className="bg-[#51695a]  w-6 h-6 rounded-full absolute top-2 right-2">
+                    <div className="bg-[#7a9e79] w-6 h-6 rounded-full absolute top-0 right-2"></div>
+                </div>
             </section>
             <section className="flex flex-col justify-between px-1">
                 <p className="font-insan">{description}</p>
@@ -80,7 +83,7 @@ const DeadlineCard = ({title, description,due,label, weight,consequence  })=>{
                         <button className="px-2 py-1 bg-primary text-red-300 rounded-2xl hover:bg-triary">Unfinished</button>
                         <button className="px-2 py-1 bg-primary text-teal-300 rounded-2xl hover:bg-triary">Completed</button>
                     </div>
-                </div>
+                </div>  
             </section>
         </aside>
     )

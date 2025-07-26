@@ -18,9 +18,9 @@
     }
 
     .formBG{
-        background-image: url("./assets/form.png");
+        background-image: url("./assets/space.png");
         background-repeat: no-repeat;
-        background-size:cover;
+        background-size: cover;
     }
     .pavilionBG{
         background-image: url("./assets/bgkulti.png");

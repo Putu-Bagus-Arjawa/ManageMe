@@ -18,11 +18,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-uploadAvatar.post(
-  "/avatar",
-  authenticate,
-  upload.single("avatar"),
-  async (req, res) => {
+uploadAvatar.post("/avatar", authenticate, upload.single("avatar"), async (req, res) => {
     try {
       const userId = req.user.id;
 

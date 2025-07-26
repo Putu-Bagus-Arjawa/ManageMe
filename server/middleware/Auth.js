@@ -44,12 +44,46 @@ authRoutes.post("/register", async (req, res)=>{
 
      
         const hashedPassword = await bcrypt.hash(password, 10)
-        await prisma.user.create({
-            data:{
+        const user = await prisma.user.create({
+        data:{
                 name,
                 password: hashedPassword, 
             }
-        })
+        });
+
+        const eatingData = [];
+        let day = 1;
+        for (const _ of Array(30)) {
+        eatingData.push({
+            day,
+            items: "",
+            price: 0,
+            gizi: "",
+            eating_exp: 0,
+            eating_status: "Unfinished",
+            userId: user.id,
+        });
+        day++;
+        }
+
+        await prisma.eating.createMany({ data: eatingData });
+
+        const allocationData = [];
+        let allocation_day = 1;
+
+        for (const _ of Array(30)) {
+        allocationData.push({
+            allocation_day,
+            items: "",
+            price: 0,
+            allocation_exp: 0,
+            allocation_status: "Unfinished",
+            userId: user.id,
+        });
+            allocation_day++;
+        }
+
+        await prisma.allocation.createMany({ data: allocationData });
 
         res.status(201).json({message: "Anda Berhasil Register"})
 

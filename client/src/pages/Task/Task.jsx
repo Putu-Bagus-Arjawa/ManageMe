@@ -91,7 +91,7 @@ const Task = () => {
                     </Link>
                     </section>
 
-                    <section className="grid grid-cols-1 place-items-center lg:grid-cols-2 gap-8 mb-8">
+                    <section className=" w-full grid grid-cols-1 place-items-center lg:grid-cols-2 gap-8 mb-8">
                         {tasks.length === 0 ? (
                             <p className="text-gray-500 col-span-full">Tidak ada task. 🎉</p>
                         ) : (
@@ -114,7 +114,7 @@ const Task = () => {
 const TaskCard = ({taskName, expCompletion, id, handleClick})=>{
     return(
         <div
-            className="pavilionBG relative shadow-xl rounded-xl w-4/5 h-52 flex flex-col justify-between px-4 py-6 bg-white"
+            className="pavilionBG relative shadow-xl rounded-xl w-4/5 min-h-60 flex flex-col justify-between px-4 py-6 bg-white"
         >
             <div className="bg-gray-300 w-6 h-6 rounded-full absolute top-2 right-2">
                 <div className="bg-gray-950 w-6 h-6 rounded-full absolute top-2 right-2"></div>
@@ -124,7 +124,7 @@ const TaskCard = ({taskName, expCompletion, id, handleClick})=>{
             <div className="flex flex-col items-center text-center p-4">
                 <h3 className="text-lg font-bold">{taskName}</h3>
                 <p className="text-sm text-gray-600">Ki Gained: </p>  
-                <p className="text-sm text-gray-600"> {expCompletion} points</p>                           
+                <p className="text-sm text-gray-600"> {expCompletion} points</p>
             </div>
 
             <button

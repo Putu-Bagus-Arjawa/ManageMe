@@ -11,7 +11,6 @@ taskRoutes.post("/finish/:taskId", authenticate, async (req, res) => {
     const userId = req.user.id
     const taskId = parseInt(req.params.taskId)
 
-    // Ambil task dan pastikan itu milik user
     const task = await prisma.task.findUnique({ where: { id: taskId } })
 
     if (!task || task.userId !== userId) {
@@ -35,9 +34,6 @@ taskRoutes.post("/finish/:taskId", authenticate, async (req, res) => {
     return res.status(500).json({ error: "Gagal menyelesaikan task secara aman" })
   }
 })
-
-
-
 
 
 taskRoutes.post("/insert", authenticate, async (req, res)=>{

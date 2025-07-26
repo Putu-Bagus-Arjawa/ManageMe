@@ -1,10 +1,10 @@
 
-const InputTaskName = ({handleChange, value}) => {
+const InputForm = ({handleChange, value, typenya, labelnya}) => {
   return (
     <div className="flex flex-col">
-        <label className="font-aldrich">Task Name :</label>
+        <label className="font-aldrich">{labelnya}</label>
         <input
-                    type="text"
+                    type={typenya}
                     value={value}
                     className="text-teal-900 focus:outline-none border-[0.5px] p-1 rounded-lg bg-white"
                     onChange={handleChange}
@@ -13,4 +13,4 @@ const InputTaskName = ({handleChange, value}) => {
   )
 }
 
-export default InputTaskName
+export default InputForm

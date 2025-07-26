@@ -1,6 +1,8 @@
 import { Link, useNavigate } from 'react-router'
 import { useUserContext } from '../Context/UserContext'
 import { useAuth } from '../Context/AuthContext'
+import Loading from './Loading'
+import logo from "../assets/react.svg"
 
 const Sidebar = () => {
   const { user, loading } = useUserContext()
@@ -12,29 +14,29 @@ const Sidebar = () => {
      if(result)  navigate('/')
   }
 
-  if (loading) return <div className="text-white text-center">Loading...</div>
+  if (loading) return <Loading/>
 
   return (
-    <section className='shadow-lg shadow-cyan-900 bg-linear-to-tr from-triary via-primary to-secondary h-[200vh] px-8 w-68 text-green-200 rounded-2xl'>
+    <section className='shadow-lg shadow-cyan-900 formBG h-screen fixed px-8 w-64 text-green-200 rounded-2xl p-4'>
+      <div className='flex justify-between'>
+          <img src={logo} alt="" />
+          <p className='font-aldrich'>Manage Me</p>
+      </div>
       <div className='flex justify-center flex-col items-center py-8 '>
         <img
               src={(user.avatar && `http://localhost:9000${user.avatar}?t=${Date.now()}`) || "/default-avatar.png"}
-
               alt="Avatar"
               className="w-32 h-32 rounded-full object-cover border-4 border-[#8D6E6E] shadow-md"
+              onClick={()=> navigate("/profile")}
             />
-        <p className='font-insan text-[18px]'>{user.name}</p>
+        <p className='font-aldrich text-[18px]'>{user.name}</p>
       </div>
       <div className='flex flex-col'>
         {[
           { name: "Home", url: "/" },
           { name: "Task", url: "/task" },
-          { name: "Deadline", url: "/deadline" },
-          { name: "Workout", url: "/workout" },
           { name: "Eating", url: "/eating" },
           { name: "Allocation", url: "/allocation" },
-          { name: "Pomodoro", url: "/pomodoro" },
-          { name: "My Profile", url: "/profile" },
         ].map((item, index) => (
           <Link
             to={item.url}

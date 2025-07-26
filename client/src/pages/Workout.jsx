@@ -41,13 +41,13 @@ const Workout = () => {
         <LevelSection/>
         <div className='mt-40  flex justify-center'>
           <table className='w-4/5 text-center'>
-            <tr>
+            <tr className='bg-secondary'>
               {["Hari ke-", "Olahraga", "Exp", "Completion"].map((item)=>(
                 <th className='font-insan'>{item}</th>
               ))}
             </tr>
             {workoutData.map((item, i)=>(
-              <tr key={i}>
+              <tr key={i} className={i % 2==0? "bg-white":"bg-triary"}>
                 <td className='py-2'>{item.day}</td>
                 <td className='py-2'>{item.exercise}</td>
                 <td className='py-2'>{item.exp}</td>

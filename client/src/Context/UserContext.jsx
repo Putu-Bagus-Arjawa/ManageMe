@@ -13,13 +13,13 @@ export const UserProvider = ({ children }) => {
       });
       const data = await res.json();
       if (res.ok) {
-        console.log("✅ Data user dari /user:", data)
+        console.log("Data user dari /user:", data)
         setUser(data.user);
       }
     } catch (error) {
       console.error("Gagal ambil data user:", error);
     } finally{
-              setLoading(false)
+      setLoading(false)
     }
   };
 

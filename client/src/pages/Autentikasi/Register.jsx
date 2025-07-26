@@ -38,7 +38,7 @@ async function handleSubmit(e) {
   return (
    <div className='pavilionBG flex justify-center items-center h-screen w-screen p-4' id='autentikasiBG'>
       <Form submitting={handleSubmit}>
-         <div className='flex flex-col justify-around h-full w-full'>
+         <div className='flex flex-col justify-around h-full w-full p-10'>
           <section className=''>
               <h2 className='font-aldrich text-4xl flex justify-center'>Register</h2>
           </section>

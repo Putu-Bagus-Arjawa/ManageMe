@@ -3,7 +3,9 @@ import { createContext, useContext, useEffect, useState } from "react";
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(
+    {}
+  );
   const [loading, setLoading] = useState(true);
 
   const verify = async () => {
@@ -16,7 +18,7 @@ export const AuthProvider = ({ children }) => {
       console.log(data)
     } catch (error) {
       console.error("error", error)
-      setUser(null);
+      setUser({});
     }finally{
       setLoading(false)
     }

@@ -8,7 +8,8 @@ const userRoutes = Router()
 userRoutes.get('/', authenticate, async (req, res) => {
   try {
     const userFromDB = await prisma.user.findUnique({
-      where: { id: req.user.id },
+      where: { id: req.user.id }, 
+      select:{name: true,level:true, current_exp:true, registration_date: true, avatar:true}
     })
 
     if (!userFromDB) {

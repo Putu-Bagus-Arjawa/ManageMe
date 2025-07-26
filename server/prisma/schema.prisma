@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,34 +7,65 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id Int @id @default(autoincrement())
-  name     String
-  password String
-  level   Int   @default(1)
-  current_exp Int    @default(1)
+model exp_level_thresholds {
+  id           Int @id @default(autoincrement())
+  level        Int
+  exp_required Int
+}
+
+model level_labels {
+  id         Int    @id @default(autoincrement())
+  label_name String
+  min_level  Int
+  max_level  Int
+}
+
+model task {
+  id        Int    @id @default(autoincrement())
+  nama_task String
+  exp       Int
+  userId    Int
+  user      user   @relation(fields: [userId], references: [id], map: "Task_userId_fkey")
+
+  @@index([userId], map: "Task_userId_fkey")
+}
+
+model user {
+  id                Int      @id @default(autoincrement())
+  name              String
+  password          String
+  level             Int      @default(1)
+  current_exp       Int      @default(1)
   registration_date DateTime @default(now())
-  avatar String?
-  tasks Task[]
+  avatar            String?
+  task              task[]
+  eating            eating[]
+  allocation        allocation[]
 }
 
-model EXP_LEVEL_THRESHOLDS{
-    id Int @id @default(autoincrement())
-    level Int
-    exp_required Int
+
+model eating {
+  day           Int
+  items         String
+  price         Int
+  gizi          String
+  eating_exp    Int
+  eating_status String @default("Unfinished")
+  userId        Int
+  user          user   @relation(fields: [userId], references: [id])
+
+  @@id([userId, day])
 }
 
-model LEVEL_LABELS{
-  id Int @id @default(autoincrement())
-  label_name String 
-  min_level Int
-  max_level Int
-}
 
-model Task{
-  id Int @id @default(autoincrement())
-  nama_task String 
-  exp Int
-  userId Int     
-  user  User @relation(fields: [userId], references: [id])
+model allocation {
+  allocation_day      Int
+  items               String
+  price               Int
+  allocation_exp      Int
+  allocation_status   String @default("Unfinished")
+  userId              Int
+  user                user   @relation(fields: [userId], references: [id])
+
+  @@id([userId, allocation_day])
 }

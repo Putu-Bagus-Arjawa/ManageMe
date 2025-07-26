@@ -1,8 +1,8 @@
-import React, { useState } from 'react'
-import Dashboard from '../../../Components/Dashboard'
-import Form from '../../../Components/Form'
-import InputTaskName from './InputTaskName'
-import InputTaskEXP from './InputTaskEXP'
+import  { useState } from 'react'
+import Dashboard from '../../Components/Dashboard'
+import Form from '../../Components/Form'
+import LevelSection from '../../Components/LevelSection'
+import InputForm from '../../Components/InputForm'
 
 const AddTask = () => {
   const [form, setForm] = useState({
@@ -47,27 +47,33 @@ const AddTask = () => {
   return (
     <div>
       <Dashboard>
-        <div className="w-full h-full flex justify-center py-20">
+        <LevelSection/>
+        <div className="w-full h-full flex justify-center py-28">
           <Form submitting={handleSubmit}>
-            <div className="flex flex-col justify-around h-full w-full">
+            <div className="flex flex-col justify-around h-full w-full py-12 px-12">
               <section>
                 <h2 className="font-aldrich text-4xl flex justify-center">Insert Task</h2>
               </section>
-
+              
               <section className="flex flex-col gap-y-4">
-                <InputTaskName 
+                <InputForm 
                   value={form.nama_task}
                   handleChange={(e) => {
                       setForm((prev) => ({ ...prev, nama_task: e.target.value }))
                       if (message.pesan) setMessage({ pesan: "", tipe: "" })
                     }}
+                  labelnya={"Nama task: "}
+                  typenya = {"text"}
                 />
-                <InputTaskEXP 
+                <InputForm 
                   value={form.exp}
-                  handleInputExp={(e) => {
+                  typenya = {"number"}
+                  handleChange={(e) => {
                       setForm((prev) => ({ ...prev, exp: parseInt(e.target.value) || 0 }))
                       if (message.pesan) setMessage({ pesan: "", tipe: "" })
                     }}
+                  labelnya={"Exp: "}
+                  
                 />
 
 

@@ -1,9 +1,11 @@
  import { PrismaClient } from "@prisma/client";
- 
+
+
 
  const prisma = new PrismaClient()
  
  async function addLevel(userId, expToAdd) {
+
   const user = await prisma.user.findUnique({
     where: { id: userId }
   })
@@ -13,7 +15,7 @@
   let currentExp = user.current_exp + expToAdd
   let currentLevel = user.level
 
-  const thresholds = await prisma.eXP_LEVEL_THRESHOLDS.findMany({
+  const thresholds = await prisma.exp_level_thresholds.findMany({
     orderBy: { level: "asc" }
   })
 

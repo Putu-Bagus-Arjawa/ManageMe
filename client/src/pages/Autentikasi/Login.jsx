@@ -2,10 +2,21 @@ import { Link, useNavigate } from 'react-router'
 import Form from '../../Components/Form'
 import { useAuth } from '../../Context/AuthContext';
 import { useState } from 'react';
+import Loading from '../../Components/Loading';
+import { useUserContext } from '../../Context/UserContext';
+import { useLevelTresholdContext } from '../../Context/LevelTresholdContext';
+import { useLevelLabelContext } from '../../Context/LevelLabelContext';
+
+
 
 const Login = () => {
   const navigate = useNavigate()
-  const {verify} = useAuth()
+  const {loading,verify} = useAuth()
+  const { refreshUser } = useUserContext(); 
+  const {fetchTreshold} = useLevelTresholdContext()
+  const {fetchLabels} = useLevelLabelContext()
+
+
   const [form, setForm] = useState({
           name: "",
           password: "",
@@ -28,8 +39,13 @@ const Login = () => {
       console.log(respons)
       
       if(respons.ok){
-            await verify()    
-            navigate(data.urlnya)
+            await verify()
+            await refreshUser();   
+            await fetchTreshold();
+            await fetchLabels();
+            setTimeout(() => {
+              return navigate(data.urlnya)
+            }, 200); 
 
 
             setForm({
@@ -47,10 +63,11 @@ const Login = () => {
     }
   }
   
+  if(loading) return <Loading/>
   return (
     <div className='pavilionBG flex justify-center items-center h-screen w-screen' id='autentikasiBG'>
       <Form submitting={handleSubmit}>
-         <div className='flex flex-col justify-around h-full w-full'>
+         <div className='flex flex-col justify-around h-full w-full p-10'>
           <section className=''>
               <h2 className='font-aldrich text-4xl flex justify-center'>Login</h2>
           </section>

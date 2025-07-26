@@ -1,23 +1,32 @@
+import { BadgeQuestionMark } from "lucide-react";
 import { useLevelTresholdContext } from "../Context/LevelTresholdContext";
 import { useUserContext } from "../Context/UserContext";
+import Loading from "./Loading";
 import { useLevelLabelName } from './useLevelLabelName'
+import { Link } from "react-router";
+import { useLevelLabelContext } from "../Context/LevelLabelContext";
 
 
 
 const LevelSection = () => {
   const { user, loading } = useUserContext()
   const { tresholdLevel, loadingTreshold } = useLevelTresholdContext()
+  const {loadingLabel} = useLevelLabelContext()
   const label =  useLevelLabelName()
 
 
-  const isDataReady = !loading && !loadingTreshold
-  if (!isDataReady) return <div>Loading...</div>;
 
-  const next = tresholdLevel.find((t) => t.level === user.level + 1)
+  const isDataReady = !loading && !loadingTreshold && !loadingLabel
+  if (!isDataReady) return  <Loading/>
+  
+  const next = tresholdLevel?.find((t) => t.level === user.level + 1);
+
+
 
   return (
-    <nav className="fixed t-0 w-4/5 z-10 flex justify-center items-center rounded-full bg-linear-to-br from-primary via-secondary to-triary px-20 py-8 shadow-lg shadow-cyan-900">
-      <div className="flex gap-x-4 w-full items-start ">
+    <nav className="fixed top-0 right-0 w-4/5 z-10 rounded-full formBG px-20 py-8 shadow-lg shadow-cyan-900">
+      <div className="flex justify-between gap-x-4 w-full items-start">
+        <Link to={"/faq"} className="text-green-200"> <BadgeQuestionMark /></Link>
         <div className="flex gap-x-4">
           <span className="font-aldrich text-teal-400">Level {user.level}</span>
           <p className="font-aldrich text-blue-300">
@@ -28,8 +37,11 @@ const LevelSection = () => {
           </span>
         </div>
       </div>
+      {console.log("TRESHOLD:", tresholdLevel)}
+      {console.log("IS LOADING:", loadingTreshold)}
     </nav>
   );
 };
 
 export default LevelSection;
+

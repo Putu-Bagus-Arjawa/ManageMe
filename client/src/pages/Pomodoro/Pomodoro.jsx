@@ -1,30 +1,32 @@
-import React from 'react'
-import Dashboard from '../../Components/Dashboard'
-import LevelSection from '../../Components/LevelSection'
+// Pomodoro.jsx
+import { useNavigate } from "react-router";
 
-const Pomodoro = () => {
-    const time  = ["50:10", "45:15", "25:5"]
+export default function Pomodoro() {
+  const navigate = useNavigate();
+
+  const options = [
+    { label: "50:10", start: 50, end: 10 },
+    { label: "35:15", start: 35, end: 15 },
+    { label: "25:5",  start: 25, end: 5 },
+    { label: "1:5",  start: 1, end: 5 },
+  ];
+
+  const handleClick = (start, end) => {
+    navigate(`/pomodoro/${start}/${end}`);
+  };
+
   return (
-    <div>
-        <Dashboard>
-            <LevelSection/>
-                  <section className='mt-40  grid grid-cols-3 gap-x-4'>
-                        {time.map((item, idx)=>(
-                            <PomodoroCard key={idx} time={item}/>
-                        ))}
-                  </section>
-        </Dashboard>
-
-    </div>
-  )
-}
-
-const PomodoroCard = ({time})=>{
-    return(
-        <div className='shadow-lg w-4/5 h-50 flex justify-center items-center hover:bg-primary'>
-            <h2 className='text-4xl '>{time}</h2>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
+      {options.map((item) => (
+        <div
+          key={item.label}
+          className="bg-white shadow-md rounded-xl p-6 text-center cursor-pointer hover:shadow-lg transition"
+          onClick={() => handleClick(item.start, item.end)}
+        >
+          <h3 className="text-2xl font-bold">{item.label}</h3>
+          <p className="text-gray-600 mt-2">Fokus {item.start} menit, istirahat {item.end} menit</p>
         </div>
-    )
+      ))}
+    </div>
+  );
 }
-
-export default Pomodoro

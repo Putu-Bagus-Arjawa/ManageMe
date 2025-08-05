@@ -11,7 +11,6 @@ import Home from './pages/Home.jsx'
 import ProtectedRoutes from './Context/protectedRoutes.jsx'
 import ProviderAll from './Context/ProviderAll.jsx'
 import Profile from './pages/Profile/Profile.jsx'
-import Workout from './pages/Workout.jsx'
 import Pomodoro from './pages/Pomodoro/Pomodoro.jsx'
 import Allocation from './pages/Allocations/Allocation.jsx'
 import Eating from './pages/Eating/Eating.jsx'
@@ -19,40 +18,42 @@ import PomodoroWorker from './pages/Pomodoro/PomodoroWorker.jsx'
 import ModifyEating from './pages/Eating/ModifyEating.jsx'
 import AddTask from './pages/Task/AddTask.jsx'
 import FAQ from './pages/FAQ.jsx'
-import Deadline from './pages/Deadline.jsx'
 import EatingStatus from './pages/Eating/EatingStatus.jsx'
+import AllocationModify from './pages/Allocations/AllocationModify.jsx'
+import AllocationStatus from './pages/Allocations/AllocationStatus.jsx'
 
 const routes = createBrowserRouter([
-  {path:'/login', element:<Login/>},
-  {path:'/register', element:<Register/>},
-  {path:"/", element:<ProtectedRoutes/>, children: [{ index: true, element:  <Home/>}]},
-  {path:"/profile", element:<ProtectedRoutes/>, children: [{ index: true, element:  <Profile/>}]},
-  {path:"/task", element:<ProtectedRoutes/>, children: [{ index: true, element:  <Task/>}]},
-  {path:"/task/insert", element:<ProtectedRoutes/>, children: [{ index: true, element:  <AddTask/>}]},
-  {path:"/deadline", element:<ProtectedRoutes/>, children: [{ index: true, element:  <Deadline/>}]},
-  {path:"/workout", element:<ProtectedRoutes/>, children: [{ index: true, element:  <Workout/>}]},
+  { path: '/login', element: <Login /> },
+  { path: '/register', element: <Register /> },
+
   {
-    path: "/pomodoro",
+    path: '/',
     element: <ProtectedRoutes />,
     children: [
+      { index: true, element: <Home /> },
+      { path: 'profile', element: <Profile /> },
+      { path: 'task', element: <Task /> },
+      { path: 'task/insert', element: <AddTask /> },
       {
-        index: true,
-        element: <Pomodoro />,
+        path: 'pomodoro',
+        children: [
+          { index: true, element: <Pomodoro /> },
+          { path: ':start/:end', element: <PomodoroWorker /> },
+        ],
       },
-      {
-        path: ":start/:end",
-        element: <PomodoroWorker />,
-      },
+      { path: 'faq', element: <FAQ /> },
+      { path: 'allocation', element: <Allocation /> },
+      { path: 'allocation/modify/:day', element: <AllocationModify /> },
+      { path: 'allocation/status/:day', element: <AllocationStatus /> },
+      { path: 'eating', element: <Eating /> },
+      { path: 'eating/modify/:day', element: <ModifyEating /> },
+      { path: 'eating/status/:day', element: <EatingStatus /> },
     ],
   },
-  {path:"/faq", element:<ProtectedRoutes/>, children: [{ index: true, element:  <FAQ/>}]},
-  {path:"/allocation", element:<ProtectedRoutes/>, children: [{ index: true, element:  <Allocation/>}]},
-  {path:"/eating", element:<ProtectedRoutes/>, children: [{ index: true, element:  <Eating/>}]},
-  {path:"/eating/modify/:day", element:<ProtectedRoutes/>, children: [{ index: true, element:  <ModifyEating/>}]},
-    {path:"/eating/status/:day", element:<ProtectedRoutes/>, children: [{ index: true, element:  <EatingStatus/>}]},
 
-  {path:'*', element:<NotFound/>}
-])
+  { path: '*', element: <NotFound /> },
+]);
+
 
 
 

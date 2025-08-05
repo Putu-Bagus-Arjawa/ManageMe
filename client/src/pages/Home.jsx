@@ -4,6 +4,7 @@ import { useUserContext } from '../Context/UserContext'
 import Loading from '../Components/Loading';
 import { useAuth } from '../Context/AuthContext';
 import { useLevelTresholdContext } from '../Context/LevelTresholdContext';
+import { Link } from 'react-router';
 
 
 
@@ -23,7 +24,7 @@ const Home = () => {
         <section className=''>
             <Dashboard >
                 <LevelSection/>
-                <div className='mt-40 '>
+                <div className='mt-40 h-full flex flex-col '>
                     <h2 className='text-2xl font-aldrich'>
                             Welcome, {user? user?.name.split(" ")[0]: "Tamu"}
                     </h2>

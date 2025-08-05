@@ -8,6 +8,7 @@ import levelRoutes from "./controller/Leveling.js";
 import uploadAvatar from "./controller/uploadAvatar.js";
 import taskRoutes from "./controller/task.js";
 import eatingRoutes from "./controller/Eating.js";
+import allocationRoutes from "./controller/Allocation.js";
 
 
 dotenv.config()
@@ -29,6 +30,7 @@ app.use('/level', levelRoutes)
 app.use("/user", uploadAvatar)
 app.use("/task", taskRoutes)
 app.use("/eating", eatingRoutes)
+app.use("/allocation", allocationRoutes)
 
 
 

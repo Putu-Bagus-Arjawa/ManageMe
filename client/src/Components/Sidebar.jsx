@@ -17,7 +17,7 @@ const Sidebar = () => {
   if (loading) return <Loading/>
 
   return (
-    <section className='shadow-lg shadow-cyan-900 formBG h-screen fixed px-8 w-64 text-green-200 rounded-2xl p-4'>
+    <section className='h-screen fixed px-8 w-64 text-green-200 p-4 bg-linear-to-bl from-indigo-500 via-fuchsia-400 to-violet-500 '>
       <div className='flex justify-between'>
           <img src={logo} alt="" />
           <p className='font-aldrich'>Manage Me</p>

@@ -1,4 +1,4 @@
-import { BadgeQuestionMark } from "lucide-react";
+import { BadgeQuestionMark, Timer, TimerIcon } from "lucide-react";
 import { useLevelTresholdContext } from "../Context/LevelTresholdContext";
 import { useUserContext } from "../Context/UserContext";
 import Loading from "./Loading";
@@ -24,9 +24,12 @@ const LevelSection = () => {
 
 
   return (
-    <nav className="fixed top-0 right-0 w-4/5 z-10 rounded-full formBG px-20 py-8 shadow-lg shadow-cyan-900">
+    <nav className="fixed top-0 right-2 w-4/5 rounded-2xl z-10 px-20 py-8 bg-linear-to-bl from-indigo-500 via-fuchsia-400 to-violet-500">
       <div className="flex justify-between gap-x-4 w-full items-start">
+    <div className="flex gap-x-8">
         <Link to={"/faq"} className="text-green-200"> <BadgeQuestionMark /></Link>
+        <Link to={"/pomodoro"}className="text-green-200 text-2xl"><Timer/></Link>
+      </div>
         <div className="flex gap-x-4">
           <span className="font-aldrich text-teal-400">Level {user.level}</span>
           <p className="font-aldrich text-blue-300">

@@ -1,7 +1,7 @@
 import { Link, useParams, useNavigate } from "react-router";
 import { useUserContext } from "../../Context/UserContext";
 
-const EatingStatus = () => {
+const AllocationStatus = () => {
   const { day } = useParams();
   const navigate = useNavigate();
   const {refreshUser} = useUserContext()
@@ -10,7 +10,7 @@ const EatingStatus = () => {
     e.preventDefault();
 
     try {
-      const res = await fetch(`http://localhost:9000/eating/status/${day}`, {
+      const res = await fetch(`http://localhost:9000/allocation/status/${day}`, {
         method: "PUT",
         credentials: "include", 
         headers: {
@@ -24,7 +24,7 @@ const EatingStatus = () => {
         throw new Error(err.message || "Gagal update status");
       }
       await refreshUser()
-               navigate("/eating"); 
+      navigate("/allocation"); 
     } catch (err) {
       console.error("Error update status:", err.message);
       alert("Gagal mengubah status!");
@@ -32,13 +32,13 @@ const EatingStatus = () => {
   };
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center">
+    <div className="h-screen w-screen flex justify-center items-center formBG">
       <form
         onSubmit={handleSubmit}
         className="w-[40vw] h-[40vh] border-2 rounded-xl flex flex-col justify-between p-8"
       >
-        <h2 className="text-xl font-semibold">Change Status to Finished?</h2>
-        <p className="text-center text-gray-600">Day: {day}</p>
+        <h2 className="text-xl font-semibold text-green-200">Change Status to Finished?</h2>
+        <p className="text-center text-green-200">Day: {day}</p>
         <div className="grid grid-cols-2 gap-x-4">
           <button type="submit" className="rounded-xl bg-black text-white py-2">Yes</button>
           <Link to="/eating" className="rounded-xl border-2 text-center py-2">No</Link>
@@ -48,4 +48,4 @@ const EatingStatus = () => {
   );
 };
 
-export default EatingStatus;
+export default AllocationStatus;

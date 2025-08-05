@@ -3,6 +3,7 @@ import { useUserContext } from '../../Context/UserContext'
 import { Camera } from 'lucide-react'
 import { useLevelLabelName } from '../../Components/useLevelLabelName'
 import { Link } from 'react-router'
+import Loading from '../../Components/Loading'
 
 const Profile = () => {
   const { user, loading, uploadAvatar } = useUserContext()
@@ -10,8 +11,7 @@ const Profile = () => {
   const [preview, setPreview] = useState(null)
   const [uploading, setUploading] = useState(false)
 
-  if (loading) return <div className="text-white text-center mt-10">Loading data kultivator...</div>
-
+  if (loading) return <Loading/>
   const handleAvatarChange = async (e) => {
     const file = e.target.files[0]
     if (file) {
@@ -30,8 +30,8 @@ const Profile = () => {
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-[#1c1b1b] to-[#2e2626] text-white px-4'>
-      <div className='w-full max-w-2xl bg-[#2e2626] rounded-2xl shadow-2xl p-8 border border-[#633333]'>
-        <h1 className='text-3xl font-bold mb-6 text-center text-[#c06f6f]'>Profil Saya</h1>
+      <div className='w-full max-w-2xl bg-linear-to-bl from-indigo-500 via-fuchsia-400 to-violet-500 rounded-2xl shadow-2xl p-8 border border-[#633333]'>
+        <h1 className='text-3xl font-bold mb-6 text-center text-white'>Profil Saya</h1>
 
         <div className="flex flex-col items-center gap-6">
           <div className="relative">

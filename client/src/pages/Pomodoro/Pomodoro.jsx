@@ -1,5 +1,7 @@
 // Pomodoro.jsx
 import { useNavigate } from "react-router";
+import Dashboard from "../../Components/Dashboard";
+import LevelSection from "../../Components/LevelSection";
 
 export default function Pomodoro() {
   const navigate = useNavigate();
@@ -16,17 +18,20 @@ export default function Pomodoro() {
   };
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6">
-      {options.map((item) => (
-        <div
-          key={item.label}
-          className="bg-white shadow-md rounded-xl p-6 text-center cursor-pointer hover:shadow-lg transition"
-          onClick={() => handleClick(item.start, item.end)}
-        >
-          <h3 className="text-2xl font-bold">{item.label}</h3>
-          <p className="text-gray-600 mt-2">Fokus {item.start} menit, istirahat {item.end} menit</p>
-        </div>
-      ))}
-    </div>
+    <Dashboard>
+      <LevelSection/>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 p-6 mt-20">
+        {options.map((item) => (
+          <div
+            key={item.label}
+            className="bg-white shadow-md rounded-xl p-6 text-center cursor-pointer hover:shadow-lg transition"
+            onClick={() => handleClick(item.start, item.end)}
+          >
+            <h3 className="text-2xl font-bold">{item.label}</h3>
+            <p className="text-gray-600 mt-2">Fokus {item.start} menit, istirahat {item.end} menit</p>
+          </div>
+        ))}
+      </div>
+    </Dashboard>
   );
 }

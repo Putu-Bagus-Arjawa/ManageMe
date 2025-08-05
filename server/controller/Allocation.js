@@ -5,26 +5,27 @@ import { PrismaClient } from "@prisma/client"
 import addLevel from "./addLevel.js";
 
 
-const eatingRoutes = Router()
+const allocationRoutes = Router()
 const prisma = new PrismaClient()
 
-eatingRoutes.get("/", authenticate, async (req, res)=>{
-    try {
-        const userId = req.user.id
-        const eatings = await prisma.eating.findMany({
-          where: {
-            userId: userId
-          }
-        })
-        if (!eatings) return res.status(404).json({message: "data tidak ada"})
-        res.status(200).json(eatings)
+
+allocationRoutes.get("/", authenticate, async (req, res)=>{
+        try {
+            const userId = req.user.id
+            const allocation = await prisma.allocation.findMany({
+            where: {
+                userId:userId
+            }
+            })
+            if (!allocation) return res.status(404).json({message: "data tidak ada"})
+            res.status(200).json(allocation)
     } catch (error) {
-        console.error("❌ Gagal ambil eating:", err)
-         res.status(500).json({ error: "Gagal ambil eating dari database" })
+        console.error("❌ Gagal ambil allocation:", err)
+         res.status(500).json({ error: "Gagal ambil allocation dari database" })
     }
 })
 
-eatingRoutes.get("/:day", authenticate, async (req, res) => {
+allocationRoutes.get("/:day", authenticate, async (req, res) => {
   const day = parseInt(req.params.day)
   const userId = req.user.id
 
@@ -33,11 +34,11 @@ eatingRoutes.get("/:day", authenticate, async (req, res) => {
   }
 
   try {
-    const data = await prisma.eating.findUnique({
+    const data = await prisma.allocation.findUnique({
       where: {
-        userId_day: {
+        userId_allocation_day: {
           userId,
-          day
+          allocation_day: day
         }
       }
     })
@@ -53,22 +54,21 @@ eatingRoutes.get("/:day", authenticate, async (req, res) => {
   }
 })
 
-eatingRoutes.put("/modify/:day", authenticate, async (req, res)=>{
-    const {item, harga, gizi, exp} = req.body
+allocationRoutes.put("/modify/:day", authenticate, async (req, res)=>{
+    const {item, harga, exp} = req.body
     const day =  parseInt(req.params.day)
     const userId = req.user.id
 
-    if(!item || !harga || !gizi || !exp){
+    if(!item || !harga || !exp){
         res.status(400).json({message: "All the column must be filled!"})
     }
     try {
-        await prisma.eating.update({
-            where: {userId_day:{userId, day}},
+        await prisma.allocation.update({
+            where: {userId_allocation_day:{userId, allocation_day:day}},
             data: {
                 items: item,
                 price: parseInt(harga),
-                gizi,
-                eating_exp: parseInt(exp)
+                allocation_exp: parseInt(exp)
             }
         })
 
@@ -79,32 +79,32 @@ eatingRoutes.put("/modify/:day", authenticate, async (req, res)=>{
     }
 })
 
-eatingRoutes.put("/status/:day", authenticate, async (req, res) => {
+allocationRoutes.put("/status/:day", authenticate, async (req, res) => {
   const day = parseInt(req.params.day);
   const userId = req.user.id;
 
   try {
-    const eating = await prisma.eating.findUnique({
+    const allocation = await prisma.allocation.findUnique({
       where: {
-        userId_day: { userId, day },
+        userId_allocation_day: { userId, allocation_day:day  },
       },
     });
-    await addLevel(userId, eating.eating_exp)
+    await addLevel(userId, allocation.allocation_exp)
 
-    if (!eating) {
+    if (!allocation) {
       return res.status(404).json({ message: "Data makan tidak ditemukan" });
     }
 
-    if (eating.eating_status === "Finished") {
+    if (allocation.allocation_status === "Finished") {
       return res.status(400).json({ message: "Sudah Finished" });
     }
 
-    await prisma.eating.update({
+    await prisma.allocation.update({
       where: {
-        userId_day: { userId, day },
+        userId_allocation_day: { userId, allocation_day:day },
       },
       data: {
-        eating_status: "Finished",
+        allocation_status: "Finished",
       },
     });
 
@@ -115,15 +115,14 @@ eatingRoutes.put("/status/:day", authenticate, async (req, res) => {
   }
 });
 
-
-eatingRoutes.put("/reset", authenticate, async (req, res) => {
+allocationRoutes.put("/reset", authenticate, async (req, res) => {
   const userId = req.user.id;
 
   try {
-   const reset =  await  prisma.eating.updateMany({
+   const reset =  await  prisma.allocation.updateMany({
     where: {userId},
     data: {
-      eating_status: "Unfinished"
+      allocation_status: "Unfinished"
     }
    })
 
@@ -135,8 +134,5 @@ eatingRoutes.put("/reset", authenticate, async (req, res) => {
 });
 
 
+export default allocationRoutes
 
-
-
-
-export default eatingRoutes

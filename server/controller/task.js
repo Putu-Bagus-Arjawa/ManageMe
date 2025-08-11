@@ -1,12 +1,15 @@
-import { Router } from "express";
-import authenticate from "../middleware/authenticate.js";
-import { PrismaClient } from "@prisma/client";
-import addLevel from "./addLevel.js";
 
-const taskRoutes = Router()
-const prisma = new PrismaClient()
+import addLevel from "../lib/addLevel.js";
+import prisma from "../lib/prisma.js";
 
-taskRoutes.post("/finish/:taskId", authenticate, async (req, res) => {
+
+export const getTask = async(req, res)=>{
+    const userId = req.user.id
+    const data = await prisma.task.findMany({where:{userId}})
+    res.json({task: data})
+}
+
+export const finishTask =  async (req, res) => {
   try {
     const userId = req.user.id
     const taskId = parseInt(req.params.taskId)
@@ -33,10 +36,10 @@ taskRoutes.post("/finish/:taskId", authenticate, async (req, res) => {
     console.error("❌ Transaction gagal:", error)
     return res.status(500).json({ error: "Gagal menyelesaikan task secara aman" })
   }
-})
+}
 
 
-taskRoutes.post("/insert", authenticate, async (req, res)=>{
+ export const insertTask =  async (req, res)=>{
     const {task, exp} = req.body
 
     try {
@@ -57,12 +60,6 @@ taskRoutes.post("/insert", authenticate, async (req, res)=>{
             detail: error.message 
         });
     }
-})
+}
 
-taskRoutes.get("/", authenticate, async(req, res)=>{
-    const userId = req.user.id
-    const data = await prisma.task.findMany({where:{userId}})
-    res.json({task: data})
-})
 
-export default taskRoutes

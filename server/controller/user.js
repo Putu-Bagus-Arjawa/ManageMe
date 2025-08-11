@@ -1,11 +1,9 @@
 import { PrismaClient } from "@prisma/client"
-import authenticate from "../middleware/authenticate.js"
 import { Router } from "express"
 
 const prisma = new PrismaClient()
 const userRoutes = Router()
-
-userRoutes.get('/', authenticate, async (req, res) => {
+const user =  async (req, res) => {
   try {
     const userFromDB = await prisma.user.findUnique({
       where: { id: req.user.id }, 
@@ -21,7 +19,7 @@ userRoutes.get('/', authenticate, async (req, res) => {
     console.error("❌ Gagal ambil user:", err)
     res.status(500).json({ error: "Gagal ambil user dari database" })
   }
-})
+}
 
 
-export default userRoutes
+export default user

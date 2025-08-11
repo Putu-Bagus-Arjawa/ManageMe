@@ -1,14 +1,7 @@
+import prisma from "../lib/prisma.js";
+import addLevel from "../lib/addLevel.js";
 
-import { Router } from "express"
-import authenticate from "../middleware/authenticate.js"
-import { PrismaClient } from "@prisma/client"
-import addLevel from "./addLevel.js";
-
-
-const eatingRoutes = Router()
-const prisma = new PrismaClient()
-
-eatingRoutes.get("/", authenticate, async (req, res)=>{
+export const getEating = async (req, res)=>{
     try {
         const userId = req.user.id
         const eatings = await prisma.eating.findMany({
@@ -22,9 +15,9 @@ eatingRoutes.get("/", authenticate, async (req, res)=>{
         console.error("❌ Gagal ambil eating:", err)
          res.status(500).json({ error: "Gagal ambil eating dari database" })
     }
-})
+}
 
-eatingRoutes.get("/:day", authenticate, async (req, res) => {
+export const getEatingByDay = async (req, res) => {
   const day = parseInt(req.params.day)
   const userId = req.user.id
 
@@ -51,9 +44,9 @@ eatingRoutes.get("/:day", authenticate, async (req, res) => {
     console.error("❌ Error saat ambil data:", err)
     res.status(500).json({ message: "Gagal mengambil data makan" })
   }
-})
+}
 
-eatingRoutes.put("/modify/:day", authenticate, async (req, res)=>{
+export const modifyEating =  async (req, res)=>{
     const {item, harga, gizi, exp} = req.body
     const day =  parseInt(req.params.day)
     const userId = req.user.id
@@ -77,9 +70,9 @@ eatingRoutes.put("/modify/:day", authenticate, async (req, res)=>{
         console.error(error);
         res.status(500).json({ sukses: false, message: "Gagal memperbarui status" });
     }
-})
+}
 
-eatingRoutes.put("/status/:day", authenticate, async (req, res) => {
+export const updateStatusEating = async (req, res) => {
   const day = parseInt(req.params.day);
   const userId = req.user.id;
 
@@ -113,10 +106,10 @@ eatingRoutes.put("/status/:day", authenticate, async (req, res) => {
     console.error("Update error:", error);
     return res.status(500).json({ message: "Gagal update status" });
   }
-});
+}
 
 
-eatingRoutes.put("/reset", authenticate, async (req, res) => {
+export const resetStatusEating = async (req, res) => {
   const userId = req.user.id;
 
   try {
@@ -132,11 +125,4 @@ eatingRoutes.put("/reset", authenticate, async (req, res) => {
     console.error("Update error:", error);
     return res.status(500).json({ message: "Gagal update status" });
   }
-});
-
-
-
-
-
-
-export default eatingRoutes
+}

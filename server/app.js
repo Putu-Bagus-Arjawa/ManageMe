@@ -1,14 +1,18 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv"
-import authRoutes from "./middleware/Auth.js";
 import cookieParser from "cookie-parser";
-import userRoutes from "./controller/getUser.js";
-import levelRoutes from "./controller/Leveling.js";
-import uploadAvatar from "./controller/uploadAvatar.js";
-import taskRoutes from "./controller/task.js";
-import eatingRoutes from "./controller/Eating.js";
-import allocationRoutes from "./controller/Allocation.js";
+
+
+
+import authRoutes from "./routes/authRoutes.js";
+import levelRoutes from "./routes/levelRoutes.js";
+import taskRoutes from "./routes/taskRoutes.js";
+import userRoutes from "./routes/userRoutes.js";
+import uploadAvatar from "./routes/uploadAvatar.js";
+import eatingRoutes from "./routes/eatingRoutes.js";
+import allocationRoutes from "./routes/allocationRoutes.js";
+
 
 
 dotenv.config()

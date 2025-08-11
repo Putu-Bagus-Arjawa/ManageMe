@@ -1,15 +1,8 @@
-
-import { Router } from "express"
-import authenticate from "../middleware/authenticate.js"
-import { PrismaClient } from "@prisma/client"
-import addLevel from "./addLevel.js";
+import prisma from "../lib/prisma.js";
+import addLevel from "../lib/addLevel.js";
 
 
-const allocationRoutes = Router()
-const prisma = new PrismaClient()
-
-
-allocationRoutes.get("/", authenticate, async (req, res)=>{
+export const getAllocation = async (req, res)=>{
         try {
             const userId = req.user.id
             const allocation = await prisma.allocation.findMany({
@@ -23,9 +16,9 @@ allocationRoutes.get("/", authenticate, async (req, res)=>{
         console.error("❌ Gagal ambil allocation:", err)
          res.status(500).json({ error: "Gagal ambil allocation dari database" })
     }
-})
+}
 
-allocationRoutes.get("/:day", authenticate, async (req, res) => {
+export const getAllocationByDay = async (req, res) => {
   const day = parseInt(req.params.day)
   const userId = req.user.id
 
@@ -52,9 +45,9 @@ allocationRoutes.get("/:day", authenticate, async (req, res) => {
     console.error("❌ Error saat ambil data:", err)
     res.status(500).json({ message: "Gagal mengambil data makan" })
   }
-})
+}
 
-allocationRoutes.put("/modify/:day", authenticate, async (req, res)=>{
+export const modifyAllocation = async (req, res)=>{
     const {item, harga, exp} = req.body
     const day =  parseInt(req.params.day)
     const userId = req.user.id
@@ -77,9 +70,9 @@ allocationRoutes.put("/modify/:day", authenticate, async (req, res)=>{
         console.error(error);
         res.status(500).json({ sukses: false, message: "Gagal memperbarui status" });
     }
-})
+}
 
-allocationRoutes.put("/status/:day", authenticate, async (req, res) => {
+export const updateAllocationStatus = async (req, res) => {
   const day = parseInt(req.params.day);
   const userId = req.user.id;
 
@@ -113,9 +106,9 @@ allocationRoutes.put("/status/:day", authenticate, async (req, res) => {
     console.error("Update error:", error);
     return res.status(500).json({ message: "Gagal update status" });
   }
-});
+}
 
-allocationRoutes.put("/reset", authenticate, async (req, res) => {
+export const resetAllocationStatus =  async (req, res) => {
   const userId = req.user.id;
 
   try {
@@ -131,8 +124,7 @@ allocationRoutes.put("/reset", authenticate, async (req, res) => {
     console.error("Update error:", error);
     return res.status(500).json({ message: "Gagal update status" });
   }
-});
+}
 
 
-export default allocationRoutes
 

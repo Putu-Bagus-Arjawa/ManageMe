@@ -32,7 +32,7 @@ const EatingStatus = () => {
   };
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center">
+    <div className="h-screen w-screen flex justify-center items-center formBG">
       <form
         onSubmit={handleSubmit}
         className="w-[40vw] h-[40vh] border-2 rounded-xl flex flex-col justify-between p-8"

@@ -1,10 +1,6 @@
-import { Router } from "express";
-import authenticate from "../middleware/authenticate.js";
-import { PrismaClient } from "@prisma/client";
 import multer from "multer";
+import prisma from "../lib/prisma.js";
 
-const uploadAvatar = Router();
-const prisma = new PrismaClient();
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -16,9 +12,9 @@ const storage = multer.diskStorage({
   },
 });
 
-const upload = multer({ storage });
+export const upload = multer({ storage });
 
-uploadAvatar.post("/avatar", authenticate, upload.single("avatar"), async (req, res) => {
+export const avatar = async (req, res) => {
     try {
       const userId = req.user.id;
 
@@ -43,6 +39,6 @@ uploadAvatar.post("/avatar", authenticate, upload.single("avatar"), async (req, 
       res.status(500).json({ message: "Server error" });
     }
   }
-);
 
-export default uploadAvatar;
+
+

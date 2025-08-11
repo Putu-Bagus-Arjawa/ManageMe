@@ -1,30 +1,11 @@
-import {Router} from "express";
-import { PrismaClient } from "@prisma/client";
-import dotenv from "dotenv"
 import bcrypt from "bcrypt"
-import jewete from "jsonwebtoken"
-import authenticate from "./authenticate.js";
-
-
-dotenv.config()
-
-const prisma = new PrismaClient()
-const authRoutes = Router()
-
-const buatToken = (userId) =>{
-    return jewete.sign(
-    {
-        id:userId
-    },
-        process.env.JWT_RAHASIA, 
-    {
-        expiresIn: process.env.JWT_EXPIRES_IN,
-    })
-}
+import prisma from "../lib/prisma.js";
+import generateTable from "./generateTable.js";
+import buatToken from "../lib/token.js";
 
 
 
-authRoutes.post("/register", async (req, res)=>{
+export const register = async (req, res)=>{
     const {name, password} = req.body
     try {
         const nameCheck =  await prisma.user.findFirst({
@@ -50,40 +31,10 @@ authRoutes.post("/register", async (req, res)=>{
                 password: hashedPassword, 
             }
         });
+        
+        await generateTable.generateEating(user.id)
+        await generateTable.generateAllocation(user.id)
 
-        const eatingData = [];
-        let day = 1;
-        for (const _ of Array(30)) {
-        eatingData.push({
-            day,
-            items: "",
-            price: 0,
-            gizi: "",
-            eating_exp: 0,
-            eating_status: "Unfinished",
-            userId: user.id,
-        });
-        day++;
-        }
-
-        await prisma.eating.createMany({ data: eatingData });
-
-        const allocationData = [];
-        let allocation_day = 1;
-
-        for (const _ of Array(30)) {
-        allocationData.push({
-            allocation_day,
-            items: "",
-            price: 0,
-            allocation_exp: 0,
-            allocation_status: "Unfinished",
-            userId: user.id,
-        });
-            allocation_day++;
-        }
-
-        await prisma.allocation.createMany({ data: allocationData });
 
         res.status(201).json({message: "Anda Berhasil Register"})
 
@@ -94,9 +45,9 @@ authRoutes.post("/register", async (req, res)=>{
             detail: error.message 
         });
     }
-})
+}
 
-authRoutes.post('/login', async (req, res)=>{
+export const login =  async (req, res)=>{
     
     try {
         const {name, password} = req.body
@@ -128,20 +79,16 @@ authRoutes.post('/login', async (req, res)=>{
             detail: error.message 
         });
     }
-})
+}
 
-authRoutes.delete("/logout", (req, res)=>{
+export const logout = (req, res)=>{
     res.clearCookie("token", {
         httpOnly: true,
         sameSite: "Strict",   
     })
     res.json({message: "Anda berhasil logout"})
-})
-
-authRoutes.get("/verify", authenticate, (req, res) => {
-  res.json({ authenticated: true, user: req.user });
-});
+}
 
 
 
-export default authRoutes
+
